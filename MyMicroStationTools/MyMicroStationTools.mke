@@ -1,0 +1,105 @@
+#*--------------------------------------------------------------------------------------+
+#
+#    $RCSfile: MyMicroStationTools.mke,v $
+#   $Revision: 1.1 $
+#       $Date: 2006/06/07 13:13:57 $
+#
+#  $Copyright: (c) 2006 Bentley Systems, Incorporated. All rights reserved. $
+#
+#--------------------------------------------------------------------------------------*/
+appName         = MyMicroStationTools
+
+baseDir         = $(_MakeFilePath)
+
+%include        mdl.mki
+
+o = $(mdlapps)$(appName)/
+ASSEMBLY_TARGET_DIRECTORY    = $(o)bin/
+
+MakeOutputDirectories:
+    ~mkdir $(o)
+    ~mkdir $(ASSEMBLY_TARGET_DIRECTORY)
+
+#-----------------------------------------------------------------------
+#   Add references
+#-----------------------------------------------------------------------
+ASSEMBLY_REFERENCE           = $(MS)/ustation.dll
+%include csrefapnd.mki
+
+#
+#  Required to supply a definition of Bentley.ResourceManagement.IMatchLifetime
+#  for Bentley.MicroStation.AddIn.
+#
+ASSEMBLY_REFERENCE           = $(MS)/Assemblies/ECFramework/Bentley.General.1.0.dll
+%include csrefapnd.mki
+
+#
+#  Required to supply a definition of Bentley.Internal.MicroStation.IMdlAttributes
+#  for Bentley.MicroStation.AddIn.
+#
+ASSEMBLY_REFERENCE           = $(MS)/Assemblies/Bentley.MicroStation.Interfaces.1.0.dll
+%include csrefapnd.mki
+
+#
+#  Required to supply a definition of Bentley.MicroStation.WinForms.Adapter
+#
+ASSEMBLY_REFERENCE           = $(MS)/Assemblies/Bentley.MicroStation.dll
+%include csrefapnd.mki
+
+#
+#  Required to supply a definition of Bentley.Windowing.WindowManager
+#
+ASSEMBLY_REFERENCE           = $(MS)/Assemblies/Bentley.Windowing.dll
+%include csrefapnd.mki
+
+
+#
+#  Required to supply access to the COM object model via the Primary Interop Assembly (PIA)
+#
+ASSEMBLY_REFERENCE           = $(MS)/Assemblies/Bentley.Interop.MicroStationDGN.dll
+%include csrefapnd.mki
+
+#
+#  This information is used to generate AssemblyInfo.cs
+#
+ASSEMBLY_NAME       = $(appName)
+ASSEMBLY_DLL = 1
+ASSEMBLY_DESCRIPTION = Example AddIn Implementing a MicroStation tool
+ASSEMBLY_COMPANY_NAME = Bentley Systems, Inc.
+ASSEMBLY_COPYRIGHT = Copyright: (c) 2006 Bentley Systems, Incorporated. All rights reserved.
+ASSEMBLY_PRODUCT_NAME = MicroStation Sample Code
+ASSEMBLY_TITLE=$(ASSEMBLY_NAME)
+ASSEMBLY_VERSION=1.0.0.0
+ASSEMBLY_FILE_VERSION=1.0.0.0
+#ASSEMBLY_STRONGNAME = 1
+
+ASSEMBLY_SOURCE_LIST = \
+        $(baseDir)MyMicroStationToolsPlacementCmd.cs \
+        $(baseDir)MyMicroStationToolsform.cs \
+        $(baseDir)KeyinCommands.cs \
+        $(baseDir)MyMicroStationTools.cs 
+
+#
+#  Provide commands.xml if the application has key-ins.  If it does, you also
+#  need to provide a KeyinTree value for the AddinAttribute of the class that
+#  derives from Bentley.MicroStation.AddIn.
+%iffile $(baseDir)commands.xml
+    ASSEMBLY_RES_TO_ADD_FILENAME        = commands.xml
+    ASSEMBLY_RES_TO_ADD_DIRECTORY       = $(baseDir)
+    %include AssemblyResourceAppend.mki
+%endif
+
+%include LinkCSharpAddIn.mki
+
+$(MS)/Config/appl/$(appName).cfg : $(_MakeFileSpec)
+        >$@
+        \#
+        \#  If this is placed into $$(MS)/Config/appl then it should
+        \#  be possible to do "mdl load" on this sample AddIn.
+        \#
+        MS_ADDINPATH > $$(MS)\/mdlapps\/$(appName)\/bin\/
+        <
+        ~time
+
+
+

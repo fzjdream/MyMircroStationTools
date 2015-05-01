@@ -1,0 +1,1255 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Nlic.MicroStation.Interop</name>
+    </assembly>
+    <members>
+        <member name="T:Nlic.MicroStation.Interop.DgnFilesBatchOperation">
+            <summary>
+            对dgn文件进行批量处理的抽象类
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation.LOGFILE_EXTENTION">
+            <summary>
+            记录操作的log信息文件后缀名
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation.NEWLINE">
+            <summary>
+            新的换行符
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation.STATFOLDERNAME">
+            <summary>
+            存放统计信息的文件夹，在处理的dgn文件的文件夹下自动创建
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation.OPERERR_LOGFILE_PREFIX">
+            <summary>
+            对于导致程序出错的dgn文件，在日志文件前加的前缀
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation.OPEROK_LOGFILE_PREFIX">
+            <summary>
+            处理成功的dgn文件，在日志文件前加的前缀
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._operTransaction">
+            <summary>
+            对dgn文件的处理方法
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._preConditionCheckTransaction">
+            <summary>
+            处理dgn文件前的条件检查
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.SetPreConditionCheckTransaction(Nlic.MicroStation.Interop.DgnTransaction)">
+            <summary>
+            设置对每一个dgn文件进行条件检查的事务。
+            </summary>
+            <param name="preConditionCheckTransaction">The pre condition check transaction.</param>
+            <remarks></remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._getEEType">
+            <summary>
+            获取dgn文件每个模型的元素容器的方式
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._elemScanCriteria">
+            <summary>
+            用户定义的扫描规则。只有当_getEEType的值为UserDefineScanCriteria时，才使用用户定义的规则进行扫描。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.SetScanCriteria(Bentley.Interop.MicroStationDGN.ElementScanCriteria)">
+            <summary>
+            设置获取元素容器的元素扫描规则.
+            </summary>
+            <param name="elementScanCriteria">元素扫描规则.</param>
+            <remarks>只有当_getEEType的值为UserDefineScanCriteria时，才使用用户定义的规则进行扫描。</remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._dgnFolder">
+            <summary>
+            处理的dgn文件的文件夹
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._statLogFolder">
+            <summary>
+            存放统计信息的文件夹，完整路径
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._filesName">
+            <summary>
+            待处理的所有dgn文件的名称
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._file">
+            <summary>
+            当前处理的dgn文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._dgnFile">
+            <summary>
+            当前在MicroStation中打开的dgn文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._modelEe">
+            <summary>
+            从当前打开的dgn文件的激活模型获取的所有元素容器
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._operMsg">
+            <summary>
+            操作过程的消息提示
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumOperTime">
+            <summary>
+            处理合计用时，单位：秒
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumOperDgnFiles">
+            <summary>
+            处理的dgn文件总数
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumOperSuccessDgnFiles">
+            <summary>
+            处理成功的dgn文件总数
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumOperFailDgnFiles">
+            <summary>
+            处理失败的dgn文件总数
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumOperNullDgnFiles">
+            <summary>
+            处理中遇到的模型或文件为空的dgn文件总数
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._sumCantOperDgnFiles">
+            <summary>
+            没有通过前提条件检查的dgn文件总数
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._statOperSuccessLogFile">
+            <summary>
+            记录处理成功的dgn文件文件名的日志文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._statOperFailLogFile">
+            <summary>
+            记录处理失败的dgn文件文件名的日志文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._statOperNullLogFile">
+            <summary>
+            记录为空的dgn文件文件名的日志文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._statCantOperLogFile">
+            <summary>
+            日志文件，记录没有通过前提条件检查的dgn文件文件名
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._errInfoLogFile">
+            <summary>
+            记录程序出错的错误信息日志文件
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._operLogFile">
+            <summary>
+            记录对每一个dgn文件处理信息的日志文件，一个处理成功的dgn文件对应一个日志文件。
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._operLogFileName">
+            <summary>
+            处理的日志文件名称
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._operModelsStatus">
+            <summary>
+            每一个模型的处理状态
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnFilesBatchOperation._curDgnFileOperStatus">
+            <summary>
+            当前的dgn文件的处理结果状态
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.InitializeStatEnvironment">
+            <summary>
+            初始化统计环境.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.InitializeStatCountPara">
+            <summary>
+            初始化统计计数参数.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.CreateStatLogFolder">
+            <summary>
+            创建存放统计日志记录的文件夹.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.CreateStatLogFile">
+            <summary>
+            创建统计记录日志文件.
+            </summary>
+            <remarks>调用该方法前必须先调用CreateStatLogFolder方法创建统计信息文件夹</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.GetDgnFilesFullNameByFilter">
+            <summary>
+            按照查找dgn文件的筛选规则获取dgn文件夹中所有的dgn文件名.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.AddDgnFileFullNameToList(System.IO.DirectoryInfo)">
+            <summary>
+            将查找到的dgn文件的文件名添加到列表中.
+            </summary>
+            <param name="dir">文件夹.</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.DealDgnFilesTransaction">
+            <summary>
+            处理所有dgn文件的事务.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.SetCurrentDealDgnFile(System.String)">
+            <summary>
+            设置当前待处理的dgn文件.
+            </summary>
+            <param name="dgnFileFullName">Full name of the DGN file.</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.CreateOperationLogFile">
+            <summary>
+            在当前处理的dgn文件的同目录下创建一个记录处理信息的日志文件.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.SetOperationLogFileName">
+            <summary>
+            设置记录处理信息的日志文件的文件名.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.WriteOperationLogFileTitle">
+            <summary>
+            为记录处理信息的日志文件添加标题信息.
+            </summary>
+            <remarks>调用该方法前，_operLogFile必须已创建</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.AppendOperateInfoToLogFile">
+            <summary>
+            将对当前dgn文件的处理消息添加到消息日志文件
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.OperateDgnFileTransaction">
+            <summary>
+            处理每一个dgn文件的事务.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.BeforeOperateModelSetting">
+            <summary>
+            处理模型中的元素前的设置.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.GetModelElementEnumerator(Bentley.Interop.MicroStationDGN.ModelReference)">
+            <summary>
+            获取待处理的模型的元素索引器.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.IsPreConditionCheckOK">
+            <summary>
+            待处理的dgn文件的激活模型是否通过前提条件检查
+            </summary>
+            <returns><c>true</c> if [is pre condition check OK]; otherwise, <c>false</c>.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.OperateActiveModelElementsTransaction">
+            <summary>
+            Operates the active model elements transaction.
+            </summary>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.JudgeCurrentDgnFileOperationStatus">
+            <summary>
+            判断当前处理的dgn文件的最终处理结果。
+            </summary>
+            <remarks>根据所有模型的处理结果进行判断。只要有一个模型处理失败，则认为该dgn文件处理失败。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.RecordOperationInfo">
+            <summary>
+            根据每个文件的处理结果，进行记录（记录文件名）。
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.RecordProgramError(System.Exception)">
+            <summary>
+            记录程序的错误信息。
+            </summary>
+            <param name="err"></param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.CloseStatLogFile">
+            <summary>
+            关闭统计信息日志文件
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.WriteOperationSumaryToLogFile">
+            <summary>
+            写入统计摘要信息到日志文件。
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.DgnFilesBatchOperation.RenameOperationLogFile">
+            <summary>
+            重命名记录处理信息的日志文件，原因是该文件处理失败。
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnFilesBatchOperation.IsNeedPreConditionCheck">
+            <summary>
+            在处理每一个dgn文件之前，是否要进行条件检查.
+            </summary>
+            <value><c>true</c> if this instance is need pre condition check; otherwise, <c>false</c>.</value>
+            <remarks>通常，在处理dgn文件之前，都要进行一些条件检查。
+            比如，检查模型是否为只读，是否有锁定的元素、图层等。</remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnFilesBatchOperation.OperatedFileMark">
+            <summary>
+            已处理的文件加的标识.
+            </summary>
+            <value></value>
+            <remarks></remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnFilesBatchOperation.DgnFileScanFilter">
+            <summary>
+            扫描的dgn文件的过滤名称，必须以.dgn结尾.
+            </summary>
+            <value></value>
+            <remarks>不能为空，缺省值为“*.dgn”</remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnFilesBatchOperation.IsCopyNewDgnFile">
+            <summary>
+            是否复制一个dgn文件进行处理.
+            </summary>
+            <value></value>
+            <remarks>缺省值为false</remarks>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType">
+            <summary>
+            获取元素容器的方式
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.ByExistFence">
+            <summary>
+            从已定义围栅获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.BySelected">
+            <summary>
+            从选择的元素中获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.ByAutoDefineFence">
+            <summary>
+            最大化视口1，自动定义围栅获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.ScanAllGraphical">
+            <summary>
+            扫描模型的所有Graphical
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.UserDefineScanCriteria">
+            <summary>
+            用户定义扫描规则扫描获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.BySavedFence">
+            <summary>
+            从保存的围栅获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.BySavedView">
+            <summary>
+            从保存的视图获取
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicGetElementEnumeratorType.ByNamedGroup">
+            <summary>
+            从命名组获取
+            </summary>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.NlicProgramRunStatus">
+            <summary>
+            程序执行状态
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.NoElements">
+            <summary>
+            没有元素被处理，通常是因为模型或dgn文件为空
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.HasUnOperationElement">
+            <summary>
+            存在没有处理的元素。
+            </summary>
+            <remarks>通常是因为某些元素太特殊所致</remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.CantOperation">
+            <summary>
+            不能处理。
+            </summary>
+            <remarks>通常是因为存在某些特殊元素导致程序运行的前提条件检查没有通过</remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.Fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.NlicProgramRunStatus.Exception">
+            <summary>
+            有异常发生
+            </summary>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperAttachment">
+            <summary>
+            扩展的参考。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperAttachment.DetachAllReferences">
+            <summary>
+            卸载所有参考文件.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperDesignFile.OpenDesignFile(System.String)">
+            <summary>
+            打开Dgn文件
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperDesignFile.SaveAsDesignFile(System.String)">
+            <summary>
+            另存文件
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperElement">
+            <summary>
+            扩展的元素。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsPoint3dEqual(Bentley.Interop.MicroStationDGN.Point3d,Bentley.Interop.MicroStationDGN.Point3d,System.Int32)">
+            <summary>
+            根据精度判断两个点是否相等.
+            </summary>
+            <param name="point1">点1.</param>
+            <param name="point2">点2.</param>
+            <param name="digits">精度，小数点位数.</param>
+            <returns>判断结果</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.CloneAttribute(Bentley.Interop.MicroStationDGN.Element,Bentley.Interop.MicroStationDGN.Element@,System.Boolean,System.Boolean)">
+            <summary>
+            复制元素属性.
+            </summary>
+            <param name="templateElement">源模板元素.</param>
+            <param name="targetElement">目标元素.</param>
+            <param name="targetElemAlreadyAddToModel">目标元素是否已添加到模型中。</param>
+            <param name="is2DModel">当前激活模型是否为2D模型。</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetGraphicalElementInfo(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取图形元素信息，id、图层、范围等.
+            </summary>
+            <param name="elem"></param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetNonGraphicalElementInfo(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取非图形元素信息，id、图层、范围等.
+            </summary>
+            <param name="elem">.</param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.MoveToLevel(Bentley.Interop.MicroStationDGN.Element@,System.String)">
+            <summary>
+            移动元素到一个新图层.
+            </summary>
+            <param name="elem"></param>
+            <param name="existLevelName">新图层名.</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.ChangeLevel(Bentley.Interop.MicroStationDGN.Element@,System.String,System.Boolean)">
+            <summary>
+            更改元素图层属性.
+            </summary>
+            <param name="elem"></param>
+            <param name="levelName">新图层名.</param>
+            <param name="isNewLevelIfNotExist">如果图层不存在，是否新建</param>
+            <remarks>如果图层不存在，则新建</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsArcActuallyIsCircle(Bentley.Interop.MicroStationDGN.ArcElement)">
+            <summary>
+            ArcElement实际上是否为Circle。在MS中，有的圆弧首尾点均相同，SweepAngle为360度，这种圆弧实际上是圆。
+            </summary>
+            <param name="arc"></param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsArcActuallyIsLine(Bentley.Interop.MicroStationDGN.ArcElement,System.Int32)">
+            <summary>
+            ArcElement实际上是否为Line。在MS中，有的圆弧几乎是一条直线。
+            </summary>
+            <param name="arc"></param>
+            <param name="toleranceDigits">比较距离容限的小数点精确位数</param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsCurveActuallyIsPoint(Bentley.Interop.MicroStationDGN.CurveElement)">
+            <summary>
+            CurveElement实际上是否为一个点。在MS中，有的curve只有两个点，且首尾点均相同.
+            </summary>
+            <param name="curve"></param>
+            <returns><c>true</c> if [is curve actually is point] [the specified curve]; otherwise, <c>false</c>.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetCurveElementMidPoint(Bentley.Interop.MicroStationDGN.CurveElement)">
+            <summary>
+            获取CurveElement的中点.
+            </summary>
+            <param name="curve"></param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsValidVertexList(Bentley.Interop.MicroStationDGN.VertexList)">
+            <summary>
+            VertexList是否Valid。有的VertexList(如line,curve,shape)实际上为一个点，其特点为：只有两个点，且这两个点坐标相同；这类元素为bad element.
+            </summary>
+            <param name="vertexList"></param>
+            <returns><c>true</c> if [is valid vertex list] [the specified vertex list]; otherwise, <c>false</c>.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.DropComplexElement(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            打散复杂元素.
+            </summary>
+            <param name="compElem"></param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.WriteXData(Bentley.Interop.MicroStationDGN.Element@,System.String,Bentley.Interop.MicroStationDGN.XDatum[],System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            写入XData属性。
+            </summary>
+            <param name="elem"></param>
+            <param name="appName">XData的标题。</param>
+            <param name="xValues">所有属性值。</param>
+            <param name="isDeleteAllExistXData">是否删除所有已存在的XData</param>
+            <param name="isDeleteExistSameAppNameXData">对已存在的，具有相同ApplicationName的XData是否先删除，再重新写入</param>
+            <param name="isAddXDataToSubElements">对于复杂元素的每一个子元素，是否写入XData</param>
+            <remarks >
+            1、SetXData方法默认会删除已存在的、同名的ApplicationName的XData；
+            2、对于复杂元素，SetXData不会将XData值写入到每个子元素中，当打散复杂元素，其XData值会丢失。
+            </remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetCellElementOrigin(Bentley.Interop.MicroStationDGN.CellElement)">
+            <summary>
+            获取单元的中心原点。
+            </summary>
+            <param name="cell">单元元素。</param>
+            <returns>和单元图形相吻合的中心原点。</returns>
+            <remarks>在v8中，有一类为Associative Region的单元，没有真正意义上的中心原点，其Origin为0。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetSharedCellOrigin(Bentley.Interop.MicroStationDGN.SharedCellElement)">
+            <summary>
+            获取共享单元的中心原点。
+            </summary>
+            <param name="sharedCell">共享单元。</param>
+            <returns>和共享单元图形相吻合的中心原点。</returns>
+            <remarks>在v8中，有一些共享单元元素有问题，中心原点偏的太离谱。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementRangeCenter(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取元素范围的中心点。
+            </summary>
+            <param name="elem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementsRangeCenter(System.Collections.Generic.List{Bentley.Interop.MicroStationDGN.Element})">
+            <summary>
+            获取元素范围的中心点。
+            </summary>
+            <param name="elems"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsStandardArcElement(Bentley.Interop.MicroStationDGN.ArcElement)">
+            <summary>
+            圆弧元素是否为标准圆弧。
+            </summary>
+            <param name="arc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsArcIsEllipseArc(Bentley.Interop.MicroStationDGN.ArcElement)">
+            <summary>
+            圆弧是否为椭圆弧（非标准圆弧）。
+            </summary>
+            <param name="arc">The arc.</param>
+            <returns>
+              <c>true</c> if [is arc is ellipse arc] [the specified arc]; otherwise, <c>false</c>.
+            </returns>
+            <remarks>在很多应用中，不支持椭圆弧。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsArcLikePoint(Bentley.Interop.MicroStationDGN.ArcElement)">
+            <summary>
+            圆弧是否太小，近似于一个点
+            </summary>
+            <param name="arc"></param>
+            <returns></returns>
+            <remarks>有一些圆弧太小，长度不到0.1，半径小于厘米级。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsEllipticalElementIsCircle(Bentley.Interop.MicroStationDGN.EllipticalElement)">
+            <summary>
+            Determines whether [is elliptical element is circle] [the specified elliptical element].
+            </summary>
+            <param name="ellipticalElement">The elliptical element.</param>
+            <returns>
+              <c>true</c> if [is elliptical element is circle] [the specified elliptical element]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.AddUnderlineForTextNode(Bentley.Interop.MicroStationDGN.TextNodeElement,System.Double)">
+            <summary>
+            为文本节点元素添加下划线（或上划线）。
+            </summary>
+            <param name="textNodeElement">文本节点元素。</param>
+            <param name="lineOffsetFactor">下划线或上划线偏移的距离（间距的比例因子）。</param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetArcMidpoint(Bentley.Interop.MicroStationDGN.ArcElement)">
+            <summary>
+            获取圆弧上的中点。
+            </summary>
+            <param name="arcElement"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsGroupedHoleElement(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            Determines whether [is grouped hole element] [the specified elem].
+            </summary>
+            <param name="elem">The elem.</param>
+            <returns>
+              <c>true</c> if [is grouped hole element] [the specified elem]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.SetShapeIsHolePropertyToTrue(Bentley.Interop.MicroStationDGN.ClosedElement)">
+            <summary>
+            将面的IsHole属性设置为True。
+            </summary>
+            <param name="closedElement">The closed element.</param>
+            <returns></returns>
+            <remarks>v8中没有创建带洞多边形的方法，但是将内多边形的IsHole属性设置为True，创建出的多边形就是带洞多边形。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.CreateGroupedHoleElement(System.Collections.Generic.IList{Bentley.Interop.MicroStationDGN.ClosedElement})">
+            <summary>
+            创建带洞的多边形。
+            </summary>
+            <param name="closedElems">所有子多边形。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsValidParcel(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            检查一个element是否为一个地块，地块只能是Polygon或者Compound Polygon。
+            </summary>
+            <returns>
+              <c>true</c> if [is valid parcel] [the specified elem]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetShapeArea(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取多边形的面积。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsShapeIsRectangle(Bentley.Interop.MicroStationDGN.ShapeElement)">
+            <summary>
+            多边形是否是一个矩形。
+            </summary>
+            <param name="shape">The shape.</param>
+            <returns>
+              <c>true</c> if [is shape is rectangle] [the specified shape]; otherwise, <c>false</c>.
+            </returns>
+            <remarks>v8中没有矩形这一数据类型。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsLineIsPoint(Bentley.Interop.MicroStationDGN.LineElement)">
+            <summary>
+            线是否为一个点。
+            </summary>
+            <param name="line">The line.</param>
+            <returns>
+              <c>true</c> if [line is point] [the specified line]; otherwise, <c>false</c>.
+            </returns>
+            <remarks>v8中没有点这一数据类型，长度为0的线即为点。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetPointString(Bentley.Interop.MicroStationDGN.Point3d)">
+            <summary>
+            Gets the point string.
+            </summary>
+            <param name="point">The point.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetLineMidPoint(Bentley.Interop.MicroStationDGN.LineElement)">
+            <summary>
+            获取线的中点坐标。
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+            <remarks>该点一定位于线上，且距离线的首尾点距离相等</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetLineMidPositionPoint(Bentley.Interop.MicroStationDGN.LineElement)">
+            <summary>
+            获取线的中间点坐标。
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetTextNodeValue(Bentley.Interop.MicroStationDGN.TextNodeElement)">
+            <summary>
+            获取文本节点的值。
+            </summary>
+            <param name="textNode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.IsRealComplexShapeElem(Bentley.Interop.MicroStationDGN.ComplexShapeElement)">
+            <summary>
+            Determines whether [is real complex shape elem] [the specified complex shape].
+            </summary>
+            <param name="complexShape">The complex shape.</param>
+            <returns>
+              <c>false</c>复杂多边形的子元素为一个多边形; otherwise, <c>true</c>.
+            </returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetLocateElements(Bentley.Interop.MicroStationDGN.Point3d,Bentley.Interop.MicroStationDGN.View)">
+            <summary>
+            获取关键点捕捉到的所有元素
+            </summary>
+            <param name="locatePoint"></param>
+            <param name="locateView"></param>
+            <returns></returns>
+            <remarks>
+            Author:Michael Hou
+            CDT:2013-10-22
+            UDT:
+            </remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.CreateShapeElementByEnormousPoints(System.Collections.Generic.List{Bentley.Interop.MicroStationDGN.Point3d})">
+            <summary>
+            生成点数超过4000个点的复杂多边形
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.CreateShapeElementByEnormousPoints(Bentley.Interop.MicroStationDGN.Point3d[])">
+            <summary>
+            生成点数超过4000个点的复杂多边形
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementListByClosedElementList(System.Collections.Generic.List{Bentley.Interop.MicroStationDGN.ClosedElement})">
+            <summary>
+            
+            </summary>
+            <param name="closedElements"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementListByLevel(Bentley.Interop.MicroStationDGN.Level)">
+            <summary>
+            根据图层名，获取图层上元素集
+            </summary>
+            <param name="level"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.RemoveElementByLevel(Bentley.Interop.MicroStationDGN.Level)">
+            <summary>
+            删除图层上的元素
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.RemoveElement(Bentley.Interop.MicroStationDGN.Element)">
+             <summary>
+            删除元素 
+             </summary>
+             <param name="element"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetArea(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取元素的面积
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementCentriod(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            获取元素中心点
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetTextElementByFance">
+            <summary>
+            通过围栅获取单行文本元素
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetTextNodexElementByFance">
+            <summary>
+            通过围栅获取多行文本元素
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.SplitMutilTextElementToDifferentToLayer">
+            <summary>
+            打散多行文本，并放到不同的图层
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.MoveElement(Bentley.Interop.MicroStationDGN.Element@,Bentley.Interop.MicroStationDGN.Point3d,Bentley.Interop.MicroStationDGN.Point3d,System.Boolean)">
+            <summary>
+            以平移中心的的方式转换元素坐标
+            </summary>
+            <param name="elem">待转换的元素</param>
+            <param name="origin">待转换元素的中心原点</param>
+            <param name="newOrigin">新的中心原点</param>
+            <param name="isRewrite"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.UnselectAllElements">
+            <summary>
+            取消选择全部元素
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.SelectElement(Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            选择元素
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.GetElementById(System.Int64)">
+            <summary>
+            通过Id获取元素
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElement.SetTextElementJustification">
+            <summary>
+            设置选择的文本居中对齐
+            </summary>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperElementEnumerator">
+            <summary>
+            扩展的元素容器。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetFenceElementEnumerator(System.Boolean,System.Boolean)">
+            <summary>
+            获取围栅内的元素容器.
+            </summary>
+            <param name="includeLockedElement">是否包含被锁定的元素.</param>
+            <param name="cloneElementsIfClipping"></param>
+            <returns></returns>
+            <remarks>与围栅的定义模式有关</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetSelectedElementEnumerator">
+            <summary>
+            获取被选择的元素的元素容器.
+            </summary>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetElementEnumerator">
+            <summary>
+            获取元素容器，根据围栅及选择的元素获取.
+            </summary>
+            <returns></returns>
+            <remarks>先扫描围栅；
+            如果围栅未定义，再扫描选择集；
+            如果没有选择元素，返回null。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetElementEnumeratorElementCount(Bentley.Interop.MicroStationDGN.ElementEnumerator)">
+            <summary>
+            计算元素容器内的元素个数.
+            </summary>
+            <param name="ee">元素容器.</param>
+            <returns></returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetGraphicalElementEnumeratorByScan(Bentley.Interop.MicroStationDGN.ModelReference)">
+            <summary>
+            用扫描方式获取模型中的所有元素.
+            </summary>
+            <param name="model">模型.</param>
+            <returns>元素容器</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetElementEnumeratorByLevel(Bentley.Interop.MicroStationDGN.Level)">
+            <summary>
+            根据图层获取元素
+            </summary>
+            <param name="level"> </param>
+            <returns> </returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetElementEnumeratorByPoint(Bentley.Interop.MicroStationDGN.Point3d,System.Double)">
+            <summary>
+            获取点附近的元素
+            </summary>
+            <param name="point">获取范围的中心点</param>
+            <param name="searchRadius">获取范围的半径</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.IsDefineQueryElement">
+            <summary>
+            是否放置了围栅或选择了多边形元素
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetQueryElement">
+            <summary>
+            获取定义查询的元素
+            </summary>
+            <returns></returns>
+            <remarks>如果没有放置fence，也没有选择多边形元素，会报错。建议先进行IsDefineQueryElement()检查。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperElementEnumerator.GetQueryElementEx">
+            <summary>
+            获取定义查询的元素
+            </summary>
+            <returns></returns>
+            <remarks>如果没有放置fence，也没有选择多边形元素，则以当前视图的范围作为查询条件。</remarks>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperFence">
+            <summary>
+            扩展的围栅。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperFence.DefineFenceByView(Bentley.Interop.MicroStationDGN.ModelReference)">
+            <summary>
+            根据当前视口的显示区域定义围栅.
+            </summary>
+            <param name="model">模型.</param>
+            <remarks>1、默认的视口为视口1；
+            2、如果没有任何打开的视口，则抛出ViewNotOpenException的异常；
+            3、围栅定义模式设为搭界（Overlay）。</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperFence.GetActiveDesignFileFence">
+            <summary>
+            获取围栅
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperLevel">
+            <summary>
+            扩展的图层。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.HasExistLevel(System.String)">
+            <summary>
+            判断图层是否存在.
+            </summary>
+            <param name="levelName">图层名.</param>
+            <returns><c>true</c> if [has exist level] [the specified level name]; otherwise, <c>false</c>.</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.AddNewLevelToActiveDesignFile(System.String)">
+            <summary>
+            添加一个新图层到当前激活dgn文件.
+            </summary>
+            <param name="levelName">图层名.</param>
+            <returns>新添加的图层</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.GetLevelFromActiveDesignFile(System.String)">
+            <summary>
+            从当前激活dgn文件获取图层，如果没有则创建.
+            </summary>
+            <param name="levelName">图层名.</param>
+            <returns>找到、或新添加的图层</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.GetLevelByLevelName(System.String)">
+            <summary>
+            从当前激活dgn文件获取图层，如果没有返回Null
+            </summary>
+            <param name="levelName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.GetLevelByModeNameAndLevelName(System.String,System.String)">
+            <summary>
+            获取特定模型下的特定图层
+            </summary>
+            <param name="modelName"></param>
+            <param name="levelName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.DisplayAllLevel">
+            <summary>
+            显示所有图层.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.HideAllLevel">
+            <summary>
+            关闭所有图层
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.HideLevel(Bentley.Interop.MicroStationDGN.Level)">
+            <summary>
+            隐藏图层
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperLevel.ShowLevel(Bentley.Interop.MicroStationDGN.Level)">
+            <summary>
+            显示图层
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperMessage">
+            <summary>
+            MicroStation消息提示。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.ShowWarningMsgToUser(System.String,System.String)">
+            <summary>
+            向用户弹出警告消息对话框.
+            </summary>
+            <param name="msgDetail">详细消息.</param>
+            <param name="msgCaption">消息标题.</param>
+            <returns>用户选择结果选项</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.ShowErrorMsgToUser(System.String,System.String)">
+            <summary>
+            向用户弹出出错消息对话框.
+            </summary>
+            <param name="msgDetail">详细消息.</param>
+            <param name="msgCaption">消息标题.</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.ShowMsgToUser(System.String,System.String)">
+            <summary>
+            向用户弹出消息提示对话框.
+            </summary>
+            <param name="msgDetail">详细消息.</param>
+            <param name="msgCaption">消息标题.</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.RecordErrorMsgInMsgCenter(System.Exception,Bentley.Interop.MicroStationDGN.Element)">
+            <summary>
+            在MicroStation的消息中心记录错误信息.
+            </summary>
+            <param name="err">异常.</param>
+            <param name="elem">导致异常发生的元素.</param>
+            <returns>错误详细信息</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.RecordErrorMsgInMsgCenter(System.String,System.String,System.Boolean)">
+            <summary>
+            在MicroStation的消息中心记录错误信息.
+            </summary>
+            <param name="caption"></param>
+            <param name="detail"></param>
+            <param name="openAlertBox"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.RecordMsgInMsgCenter(System.String,System.String,System.Boolean)">
+            <summary>
+            在MicroStation的消息中心记录错误信息.
+            </summary>
+            <param name="caption">The caption.</param>
+            <param name="detail">The detail.</param>
+            <param name="openAlertBox">if set to <c>true</c> [open alert box].</param>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperMessage.DisplayErrorMsg(System.Exception,System.String,System.String,Bentley.Interop.MicroStationDGN.Element,System.Boolean)">
+            <summary>
+            显示错误消息.
+            </summary>
+            <param name="err">异常.</param>
+            <param name="toUserMsgBoxDetail">面向用户弹出的对话框的消息细节.</param>
+            <param name="toUserMsgBoxCaption">面向用户弹出的对话框的消息标题.</param>
+            <param name="elem">导致异常发生的元素.</param>
+            <param name="showErrorMsgToUser">是否向用户弹出提示对话框.</param>
+            <returns>错误信息描述</returns>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperModel.RemoveQueryModelElemByLevel(System.String,System.String)">
+            <summary>
+            根据模型名和图层名删除对应模型对应图层的elem
+            </summary>
+            <param name="modelName"></param>
+            <param name="levelName"></param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperModel.CreateModel(System.String)">
+            <summary>
+            建立查询模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperModel.AttachModel(System.String)">
+            <summary>
+            参考模式
+            </summary>
+            <param name="modelName"></param>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperPrint">
+            <summary>
+            扩展输出打印
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperPrint.OutputJpgByFence">
+            <summary>
+            将围栅内容导出Jpg
+            </summary>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperRaster">
+            <summary>
+            扩展的光栅。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperRaster.DetachAllRasters">
+            <summary>
+            卸载所有光栅文件.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperSettings">
+            <summary>
+            扩展的设置。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperSettings.SettingFenceDefineModelOverlay">
+            <summary>
+            将围栅定义模式改为搭界.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="T:Nlic.MicroStation.Interop.SuperView">
+            <summary>
+            扩展的视图。
+            </summary>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperView.FitView">
+            <summary>
+            全幅显示所有打开的视口.
+            </summary>
+            <remarks>欲全幅显示的视口必须打开</remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperView.OpenView1">
+            <summary>
+            打开视口1，并最大化显示.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperView.MaximizeView1">
+            <summary>
+            将视口1最大化.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperView.ZoomInElement(Bentley.Interop.MicroStationDGN.Element,Bentley.Interop.MicroStationDGN.View)">
+            <summary>
+            将视图中心定位到元素位置并且缩放到合适大小
+            </summary>
+            <param name="element">定位的元素</param>
+            <param name="view">指定的视图</param>
+        </member>
+        <member name="M:Nlic.MicroStation.Interop.SuperView.ZoomInElement(Bentley.Interop.MicroStationDGN.Range3d)">
+            <summary>
+            将以元素为中心定位视图1，并且将视图大小设置为元素相当
+            </summary>
+            <param name="range"></param>
+            <remarks>
+            Author:周俊晖
+            CDT:2013-12-16
+            UDT:2013-12-19
+            </remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnTransaction._msg">
+            <summary>
+            事务执行的消息
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnTransaction._progRunStatus">
+            <summary>
+            程序运行状态
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.DgnTransaction._ee">
+            <summary>
+            元素容器
+            </summary>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnTransaction.Message">
+            <summary>
+            获取事务执行的消息.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.DgnTransaction.IsShowMessageBoxToUser">
+            <summary>
+            是否要向用户弹出提示对话框.
+            </summary>
+            <value></value>
+            <remarks>缺省值为true，当事务执行结束或者程序发生错误，都会弹出提示对话框</remarks>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.Transaction._msg">
+            <summary>
+            事务执行的消息
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.Transaction._progRunStatus">
+            <summary>
+            程序运行状态
+            </summary>
+        </member>
+        <member name="F:Nlic.MicroStation.Interop.Transaction._ee">
+            <summary>
+            元素容器
+            </summary>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.Transaction.Message">
+            <summary>
+            获取事务执行的消息.
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:Nlic.MicroStation.Interop.Transaction.IsShowMessageBoxToUser">
+            <summary>
+            是否要向用户弹出提示对话框.
+            </summary>
+            <value></value>
+            <remarks>缺省值为true，当事务执行结束或者程序发生错误，都会弹出提示对话框</remarks>
+        </member>
+    </members>
+</doc>

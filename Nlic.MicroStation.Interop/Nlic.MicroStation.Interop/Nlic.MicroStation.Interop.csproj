@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{23151F46-1331-4FBA-BD7C-935F18F63C9B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nlic.MicroStation.Interop</RootNamespace>
+    <AssemblyName>Nlic.MicroStation.Interop</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>C:\Program Files %28x86%29\Bentley\MapEnterprise V8i\SS3\MapEnterprise\mdlapps\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Nlic.MicroStation.Interop.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bentley.General.1.0">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\Bentley.General.1.0.dll</HintPath>
+    </Reference>
+    <Reference Include="bentley.interop.microstationdgn">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\bentley.interop.microstationdgn.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Bentley.Interop.Xft">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\Bentley.Interop.Xft.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="bentley.microstation">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\bentley.microstation.dll</HintPath>
+    </Reference>
+    <Reference Include="bentley.microstation.interfaces.1.0">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\bentley.microstation.interfaces.1.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Bentley.PowerPlatform.FeatureAspects">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\Bentley.PowerPlatform.FeatureAspects.dll</HintPath>
+    </Reference>
+    <Reference Include="bentley.windowing">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\bentley.windowing.dll</HintPath>
+    </Reference>
+    <Reference Include="Bentley.Windowing.Win32">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\Bentley.Windowing.Win32.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ustation">
+      <HintPath>..\..\MyMicroStationTools\BentleyDlls\ustation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomException.cs" />
+    <Compile Include="DgnFilesBatchOperation.cs" />
+    <Compile Include="NlicGetElementEnumeratorType.cs" />
+    <Compile Include="NlicProgramRunStatus.cs" />
+    <Compile Include="PointSelectEventHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuperAttachment.cs" />
+    <Compile Include="SuperCadInputQueue.cs" />
+    <Compile Include="SuperDesignFile.cs" />
+    <Compile Include="SuperElement.cs" />
+    <Compile Include="SuperElementEnumerator.cs" />
+    <Compile Include="SuperFence.cs" />
+    <Compile Include="SuperLevel.cs" />
+    <Compile Include="SuperLineStyle.cs" />
+    <Compile Include="SuperMessage.cs" />
+    <Compile Include="SuperModel.cs" />
+    <Compile Include="SuperPrint.cs" />
+    <Compile Include="SuperRaster.cs" />
+    <Compile Include="SuperSettings.cs" />
+    <Compile Include="SuperTextStyle.cs" />
+    <Compile Include="SuperView.cs" />
+    <Compile Include="DgnTransaction.cs" />
+    <Compile Include="Transaction.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
