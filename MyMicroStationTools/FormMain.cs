@@ -93,6 +93,7 @@ namespace MyMicroStationTools {
             if (btnItem == btnStrokeCurveElem) {
                 var fialElemColl = elementOperation.StrokeCurveElement();
                 AddElementCollecionToCombo(fialElemColl);
+                MessageBox.Show("Test");
             }
             //添加选择集
             else if (btnItem == btnAddSelectElement) {
