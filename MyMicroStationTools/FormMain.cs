@@ -118,6 +118,13 @@ namespace MyMicroStationTools {
             else if (btnItem == btnTxtCenterAlignment) {
                 SuperElement.SetTextElementJustification();
             }
+             //删除点
+            else if (btnItem==btnDeletePoint) {
+                elementOperation.DeletePoint();
+            }
+            else if (btnItem==btnMoveTextElement) {
+                elementOperation.MoveDimensionText();
+            }
         }
 
         #endregion

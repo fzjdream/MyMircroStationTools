@@ -41,11 +41,14 @@
             this.itemContainer1 = new DevComponents.DotNetBar.ItemContainer();
             this.btnStrokeCurveElem = new DevComponents.DotNetBar.ButtonItem();
             this.btnTxtCenterAlignment = new DevComponents.DotNetBar.ButtonItem();
+            this.btnDeletePoint = new DevComponents.DotNetBar.ButtonItem();
             this.ribbonTabItem1 = new DevComponents.DotNetBar.RibbonTabItem();
             this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
             this.qatCustomizeItem1 = new DevComponents.DotNetBar.QatCustomizeItem();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
+            this.itemContainer5 = new DevComponents.DotNetBar.ItemContainer();
+            this.btnMoveTextElement = new DevComponents.DotNetBar.ButtonItem();
             this.ribbonCtrlMain.SuspendLayout();
             this.ribbonPanel1.SuspendLayout();
             this.ribbonBar2.SuspendLayout();
@@ -133,7 +136,7 @@
             this.ribbonBar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.itemContainer2,
             this.itemContainer4});
-            this.ribbonBar2.Location = new System.Drawing.Point(112, 0);
+            this.ribbonBar2.Location = new System.Drawing.Point(183, 0);
             this.ribbonBar2.Name = "ribbonBar2";
             this.ribbonBar2.Size = new System.Drawing.Size(285, 90);
             this.ribbonBar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -156,7 +159,7 @@
             this.integerElemCount.BackgroundStyle.Class = "DateTimeInputBackground";
             this.integerElemCount.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.integerElemCount.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2;
-            this.integerElemCount.Location = new System.Drawing.Point(39, 32);
+            this.integerElemCount.Location = new System.Drawing.Point(28, 28);
             this.integerElemCount.Name = "integerElemCount";
             this.integerElemCount.Size = new System.Drawing.Size(43, 21);
             this.integerElemCount.TabIndex = 3;
@@ -206,8 +209,7 @@
             // btnPrevious
             // 
             this.btnPrevious.Name = "btnPrevious";
-            this.btnPrevious.Symbol = "";
-            this.btnPrevious.Text = "buttonItem2";
+            this.btnPrevious.Text = "<-";
             // 
             // controlContainerItem1
             // 
@@ -220,8 +222,7 @@
             // btnNext
             // 
             this.btnNext.Name = "btnNext";
-            this.btnNext.Symbol = "";
-            this.btnNext.Text = "buttonItem3";
+            this.btnNext.Text = "->";
             // 
             // btnAddSelectElement
             // 
@@ -265,10 +266,11 @@
             this.ribbonBar1.Dock = System.Windows.Forms.DockStyle.Left;
             this.ribbonBar1.DragDropSupport = true;
             this.ribbonBar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.itemContainer1});
+            this.itemContainer1,
+            this.itemContainer5});
             this.ribbonBar1.Location = new System.Drawing.Point(3, 0);
             this.ribbonBar1.Name = "ribbonBar1";
-            this.ribbonBar1.Size = new System.Drawing.Size(109, 90);
+            this.ribbonBar1.Size = new System.Drawing.Size(180, 90);
             this.ribbonBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonBar1.TabIndex = 0;
             this.ribbonBar1.Text = "常用工具";
@@ -291,7 +293,8 @@
             this.itemContainer1.Name = "itemContainer1";
             this.itemContainer1.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.btnStrokeCurveElem,
-            this.btnTxtCenterAlignment});
+            this.btnTxtCenterAlignment,
+            this.btnDeletePoint});
             // 
             // 
             // 
@@ -306,6 +309,11 @@
             // 
             this.btnTxtCenterAlignment.Name = "btnTxtCenterAlignment";
             this.btnTxtCenterAlignment.Text = "文本居中";
+            // 
+            // btnDeletePoint
+            // 
+            this.btnDeletePoint.Name = "btnDeletePoint";
+            this.btnDeletePoint.Text = "删除点";
             // 
             // ribbonTabItem1
             // 
@@ -356,6 +364,26 @@
             this.superTabControl1.TabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.superTabControl1.TabIndex = 1;
             // 
+            // itemContainer5
+            // 
+            // 
+            // 
+            // 
+            this.itemContainer5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.itemContainer5.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
+            this.itemContainer5.Name = "itemContainer5";
+            this.itemContainer5.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.btnMoveTextElement});
+            // 
+            // 
+            // 
+            this.itemContainer5.TitleStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            // 
+            // btnMoveTextElement
+            // 
+            this.btnMoveTextElement.Name = "btnMoveTextElement";
+            this.btnMoveTextElement.Text = "移动标注";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -400,5 +428,8 @@
         private DevComponents.DotNetBar.ItemContainer itemContainer4;
         private DevComponents.DotNetBar.TextBoxItem txtElemId;
         private DevComponents.DotNetBar.ButtonItem btnTxtCenterAlignment;
+        private DevComponents.DotNetBar.ButtonItem btnDeletePoint;
+        private DevComponents.DotNetBar.ItemContainer itemContainer5;
+        private DevComponents.DotNetBar.ButtonItem btnMoveTextElement;
     }
 }

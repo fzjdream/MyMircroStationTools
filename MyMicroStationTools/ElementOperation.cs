@@ -121,7 +121,7 @@ namespace MyMicroStationTools {
                 DimensionElementList = new List<Element>(),
                 EllipseElementList = new List<Element>(),
                 TextElementList = new List<Element>(),
-                TextNodeElementList = new List<Element>(),            
+                TextNodeElementList = new List<Element>(),
             };
             var elemEnumer = SuperElementEnumerator.GetElementEnumerator();
             if (_comApp.ActiveModelReference.AnyElementsSelected) {
@@ -130,27 +130,51 @@ namespace MyMicroStationTools {
                     if (elem.IsCurveElement()) {
                         elemCollection.CurveElementList.Add(elem.AsCurveElement());
                     }
+                    else if (elem.IsLineElement()) {
+                        elemCollection.LineElementList.Add(elem.AsLineElement());
+                    }
                     else if (elem.IsBsplineCurveElement()) {
                         elemCollection.BsplineCurveElementList.Add(elem.AsBsplineCurveElement());
                     }
                     else if (elem.IsDimensionElement()) {
                         elemCollection.DimensionElementList.Add(elem.AsDimensionElement());
                     }
-                    else if (elem.IsArcElement()){
+                    else if (elem.IsArcElement()) {
                         elemCollection.ArcElementList.Add(elem.AsArcElement());
                     }
-                    else if (elem.IsEllipseElement()){
+                    else if (elem.IsEllipseElement()) {
                         elemCollection.EllipseElementList.Add(elem.AsEllipseElement());
                     }
-                    else if(elem.IsTextNodeElement()){
-                         elemCollection.TextNodeElementList.Add(elem.AsTextNodeElement());
+                    else if (elem.IsTextNodeElement()) {
+                        elemCollection.TextNodeElementList.Add(elem.AsTextNodeElement());
                     }
-                    else if (elem.IsTextElement()){
+                    else if (elem.IsTextElement()) {
                         elemCollection.TextElementList.Add(elem.AsTextElement());
                     }
                 }
             }
             return elemCollection;
+        }
+
+        public void DeletePoint() {
+            var elemeEnum = SuperElementEnumerator.GetElementEnumerator();
+            int deleteCount = 0;
+            while (elemeEnum.MoveNext()) {
+                var element = elemeEnum.Current;
+                if (element.IsLineElement()) {
+                    if (element.AsLineElement().Length < 0.00001) {
+                        deleteCount++;
+                        SuperElement.ComApp.ActiveModelReference.RemoveElement(element);
+                    }
+                }
+                else if (element.IsArcElement()) {
+                    if (element.AsArcElement().Length < 0.00001) {
+                        deleteCount++;
+                        SuperElement.ComApp.ActiveModelReference.RemoveElement(element);
+                    }
+                }
+            }
+            MessageBox.Show(String.Format("共删除{0}个点", deleteCount));
         }
         /// <summary>
         /// 打散复杂元素
@@ -173,6 +197,45 @@ namespace MyMicroStationTools {
                     elem.AsComplexStringElement().Drop();
                 }
             }
+        }
+        public void MoveDimensionText() {
+            var elemEnum = SuperElementEnumerator.GetSelectedElementEnumerator();
+            if (elemEnum == null) {
+                MessageBox.Show("请选择元素");
+            }
+            else {
+                var textElements = new List<TextElement>();
+                var dimensionElements = new List<DimensionElement>();
+                var targPoint = new Point3d();
+
+                while (elemEnum.MoveNext()) {
+                    var element = elemEnum.Current;
+                    if (element.IsDimensionElement()) {
+                        dimensionElements.Add(element.AsDimensionElement());
+                    }
+                    else if (element.IsTextElement()) {
+                        var textElem = element.AsTextElement();
+                        textElem.TextStyle.Justification = MsdTextJustification.CenterCenter;
+                        textElements.Add(textElem);
+                    }
+                }
+                if (dimensionElements.Count == 0 || textElements.Count == 0) {
+                    MessageBox.Show("请选择标注元素和文本元素");
+                }
+                else if (dimensionElements.Count > 1) {
+                    MessageBox.Show("只能选择一个标注元素");
+                }
+                else {
+                    targPoint = dimensionElements[0].Point[1];
+                    foreach (TextElement textElement in textElements) {
+                        Element element = textElement;
+                        var origin = textElement.get_Origin();
+                        SuperElement.MoveElement(ref element, origin, targPoint);
+                    }
+
+                }
+            }
+
         }
 
     }
